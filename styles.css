@@ -286,7 +286,7 @@ input[type="number"] {
 }
 
 #choices-bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     background-color: rgba(0, 0, 0, 0.3);
     width: 100%;
