@@ -69,8 +69,12 @@ input[type="number"] {
 #title {
     font-size: 48px;
     margin-top: 50px;
-    margin-bottom: 75px;
+    margin-bottom: 30px;
     letter-spacing: 3px;
+}
+
+#subtitle {
+    margin-bottom: 50px;
 }
 
 #main-container {
