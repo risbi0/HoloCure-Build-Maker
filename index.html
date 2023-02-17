@@ -30,7 +30,7 @@
               </div>
           </div>
           <div id="equipment-container">
-            <div id="build-name" onpaste="return false;" contenteditable="true">Build Name</div>
+            <div id="build-name" class="hidden" onpaste="return false;" contenteditable="true">Build Name</div>
             <!-- html2canvas not rendering text input properly -->
             <!--input type="text" id="build-name" placeholder="Build Name" maxlength="24"-->
             <div id="weapons-container">
@@ -163,31 +163,42 @@
                 <option value="aqua">Minato Aqua</option>
             </select>
         </div>
-        <div id="input-number">
-          <h1>Slot #</h1>
-          <label for="weapon-slots">Weapon</label>
-          <div id="weapon-slots">
-            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-            <input name="weapon-slots" type="number" min="1" max="6" value="6">
-            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+        <div id="more-settings">
+          <div id="input-number">
+            <h1>Slot #</h1>
+            <label for="weapon-slots">Weapon</label>
+            <div id="weapon-slots">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+              <input name="weapon-slots" type="number" min="1" max="6" value="6">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+            </div>
+            <label for="item-slots">Item</label>
+            <div id="item-slots">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+              <input name="item-slots" type="number" min="0" max="6" value="6">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+            </div>
+            <label for="stamp-slots">Stamp</label>
+            <div id="stamp-slots">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+              <input name="stamp-slots" type="number" min="0" max="3" value="3">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+            </div>
           </div>
-          <label for="item-slots">Item</label>
-          <div id="item-slots">
-            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-            <input name="item-slots" type="number" min="0" max="6" value="6">
-            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+          <div id="right-container">
+            <div id="show-build-name-container">
+              <p>Show Build Name</p>
+              <label class="switch">
+                <input type="checkbox" id="show-build-name">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div id="clear-btn-container">
+              <button id="clear-weapons">Clear Weapons</button>
+              <button id="clear-items">Clear Items</button>
+              <button id="clear-stamps">Clear Stamps</button>
+            </div>
           </div>
-          <label for="stamp-slots">Stamp</label>
-          <div id="stamp-slots">
-            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-            <input name="stamp-slots" type="number" min="0" max="3" value="3">
-            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-          </div>
-        </div>
-        <div id="clear-btn-container">
-          <button id="clear-weapons">Clear Weapons</button>
-          <button id="clear-items">Clear Items</button>
-          <button id="clear-stamps">Clear Stamps</button>
         </div>
         <button id="save-image">Save Image</button>
     </div>

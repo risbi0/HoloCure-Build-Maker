@@ -395,6 +395,15 @@ stampSlotsButtons.forEach((stampSlotsButton) => {
     });
 });
 
+// show build name
+const showBuildName = document.querySelector('#show-build-name');
+showBuildName.addEventListener('change', (e) => {
+    if (e.target.checked) {
+        buildName.classList.remove('hidden');
+    } else {
+        buildName.classList.add('hidden');
+    }
+});
 // clear buttons
 const clearWeapons = document.querySelector('#clear-weapons');
 clearWeapons.addEventListener('click', () => {
