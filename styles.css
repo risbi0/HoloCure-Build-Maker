@@ -164,6 +164,7 @@ input[type="number"] {
     font-size: 30px;
 }
 #build-name:hover {
+    font-weight: bold;
     color: white;
 }
 
