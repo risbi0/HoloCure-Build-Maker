@@ -225,6 +225,7 @@ input:checked + .slider:before {
     margin-bottom: 15px;
     margin-left: 5px;
     font-size: 30px;
+    word-wrap: break-word;
 }
 #build-name:hover {
     font-weight: bold;
