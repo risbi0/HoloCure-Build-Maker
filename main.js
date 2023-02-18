@@ -309,6 +309,7 @@ choicesBg.addEventListener('click', () => {
     weaponsMenu.classList.add('hidden');
     itemsMenu.classList.add('hidden');
     stampsMenu.classList.add('hidden');
+    statsMenu.classList.add('hidden');
 });
 const choicesContainer = document.querySelector('#choices-container');
 choicesContainer.addEventListener('click', e => e.stopPropagation());
@@ -395,6 +396,56 @@ stampSlotsButtons.forEach((stampSlotsButton) => {
     });
 });
 
+// stat priority
+const addStatPriority = document.querySelector('#add-stat-prio');
+const statsMenu = document.querySelector('#stats-choices');
+addStatPriority.addEventListener('click', () => {
+    choicesBg.classList.remove('hidden');
+    statsMenu.classList.remove('hidden');
+});
+const statChoicesStat = document.querySelectorAll('#stats-choices .stat');
+let statPriorityList = [];
+let order = 1;
+statChoicesStat.forEach((stat) => {
+    stat.addEventListener('click', () => {
+        // unordered stat, assign order
+        if (!stat.querySelector('.order').textContent) {
+            stat.querySelector('.order').textContent = order;
+            statPriorityList[order - 1] = stat.classList[1];
+            order += 1;
+        } else { // ordered stat unselected, remove order
+            statPriorityList = [];
+            const removedOrder = parseInt(stat.querySelector('.order').innerText);
+            stat.querySelector('.order').textContent = null;
+            order -= 1;
+            // rearrange existing orders
+            statChoicesStat.forEach((s) => {
+                const currentOrder = parseInt(s.innerText);
+                let subtract = 0;
+                if (currentOrder > removedOrder) {
+                    s.querySelector('.order').textContent = currentOrder - 1;
+                    subtract = 1;
+                }
+                statPriorityList[currentOrder - subtract - 1] = s.classList[1];
+            });
+        }
+    });
+});
+const statPriority = document.querySelector('#stat-priority');
+const confirmOrder = document.querySelector('#confirm-order');
+confirmOrder.addEventListener('click', () => {
+    choicesBg.classList.add('hidden');
+    statsMenu.classList.add('hidden');
+    statPriority.classList.remove('hidden');
+    statChoicesStat.forEach((stat) => stat.querySelector('.order').textContent = null); // remove order display
+    statPriority.innerHTML = statPriorityList.map(cssClass => `<span class="stat ${cssClass}"></span>`).join(' > ');
+    // reinitialize order no. and prio list
+    order = 1
+    statPriorityList = [];
+});
+const hideStatPriority = document.querySelector('#hide-stat-priority');
+hideStatPriority.addEventListener('click', () => statPriority.classList.add('hidden'));
+
 // show build name
 const showBuildName = document.querySelector('#show-build-name');
 showBuildName.addEventListener('change', (e) => {
@@ -404,6 +455,7 @@ showBuildName.addEventListener('change', (e) => {
         buildName.classList.add('hidden');
     }
 });
+
 // clear buttons
 const clearWeapons = document.querySelector('#clear-weapons');
 clearWeapons.addEventListener('click', () => {

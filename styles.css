@@ -87,7 +87,7 @@ input[type="number"] {
     display: flex;
     flex-direction: row;
     background-color: var(--dark-bg-color);
-    height: 250px;
+    height: 275px;
     padding: 30px;
     border: 3px solid var(--font-color);
 }
@@ -105,9 +105,10 @@ input[type="number"] {
     flex-direction: row;
     justify-content: space-evenly;
     width: 500px;
+    height: 350px;
 }
 
-#right-container {
+#left-container, #right-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -217,6 +218,7 @@ input:checked + .slider:before {
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%;
+    margin-left: 10px;
 }
 
 #build-name {
@@ -227,7 +229,9 @@ input:checked + .slider:before {
     font-size: 30px;
     word-wrap: break-word;
 }
-#build-name:hover {
+#build-name:hover,
+#confirm-order:hover,
+#hide-stat-priority:hover {
     font-weight: bold;
     color: white;
 }
@@ -267,7 +271,7 @@ input:checked + .slider:before {
 }
 
 #default-weap, .slot, .choice {
-    margin: 0 5px 10px 5px;
+    margin: 5px;
     padding: 5px;
 }
 
@@ -304,6 +308,23 @@ input:checked + .slider:before {
     color: #EF4444;
 }
 
+#stat-priority {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+.stat {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
 #input-number {
     display: flex;
     flex-direction: column;
@@ -338,7 +359,7 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 150px;
+    height: 130px;
 }
 
 #save-image {
@@ -352,6 +373,40 @@ input:checked + .slider:before {
     flex-flow: row wrap;
     justify-content: start;
     align-content: start;
+    width: 530px;
+}
+
+#stats-choices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+#stats-choices #second-line {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+#stats-choices div:hover {
+    cursor: pointer;
+}
+#stats-choices .order {
+    position: absolute;
+    top: -15px;
+    font-size: 10px;
+}
+#options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 150px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+#confirm-order {
+    cursor: pointer;
+}
+#hide-stat-priority {
+    cursor: pointer;
 }
 
 #choices-bg {
@@ -368,8 +423,7 @@ input:checked + .slider:before {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #171717;
-    padding: 10px 5px 7px 5px;
-    width: 530px;
+    padding: 5px;
 }
 
 .ame { background-image: url("/img/character/Amelia_Watson_Portrait.png"); }
@@ -513,3 +567,10 @@ input:checked + .slider:before {
 .stun { background-image: url("/img/stamp/Stun_Stamp_Icon.png"); }
 .trumpet { background-image: url("/img/stamp/Trumpet_Stamp_Icon.png"); }
 .weaken { background-image: url("/img/stamp/Weaken_Stamp_Icon.png"); }
+
+.atk-up { background-image: url("/img/stat/ATK_Up_Icon.png"); }
+.crt-up { background-image: url("/img/stat/Crit_Up_Icon.png"); }
+.haste-up { background-image: url("/img/stat/Haste_Up_Icon.png"); }
+.hp-up { background-image: url("/img/stat/Max_HP_Up_Icon.png"); }
+.pick-up { background-image: url("/img/stat/Pick_Up_Range_Icon.png"); }
+.spd-up { background-image: url("/img/stat/SPD_Up_Icon.png"); }

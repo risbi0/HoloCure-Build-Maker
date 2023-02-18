@@ -126,7 +126,8 @@
                     <span class="remove material-symbols-outlined hidden">cancel</span>
                 </div>
             </div>
-          </div>
+            <div id="stat-priority" class="hidden"></div>
+        </div>
       </div>
     </main>
     <div id="settings">
@@ -164,26 +165,29 @@
             </select>
         </div>
         <div id="more-settings">
-          <div id="input-number">
-            <h1>Slot #</h1>
-            <label for="weapon-slots">Weapon</label>
-            <div id="weapon-slots">
-              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-              <input name="weapon-slots" type="number" min="1" max="6" value="6">
-              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+          <div id="left-container">
+            <div id="input-number">
+              <h1>Slot #</h1>
+              <label for="weapon-slots">Weapon</label>
+              <div id="weapon-slots">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                <input name="weapon-slots" type="number" min="1" max="6" value="6">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+              </div>
+              <label for="item-slots">Item</label>
+              <div id="item-slots">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                <input name="item-slots" type="number" min="0" max="6" value="6">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+              </div>
+              <label for="stamp-slots">Stamp</label>
+              <div id="stamp-slots">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                <input name="stamp-slots" type="number" min="0" max="3" value="3">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+              </div>
             </div>
-            <label for="item-slots">Item</label>
-            <div id="item-slots">
-              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-              <input name="item-slots" type="number" min="0" max="6" value="6">
-              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-            </div>
-            <label for="stamp-slots">Stamp</label>
-            <div id="stamp-slots">
-              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-              <input name="stamp-slots" type="number" min="0" max="3" value="3">
-              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-            </div>
+            <button id="add-stat-prio">Stat Priority</button>
           </div>
           <div id="right-container">
             <div id="show-build-name-container">
@@ -204,7 +208,7 @@
     </div>
 
     <div id="choices-bg" class="hidden">
-        <div id="choices-container" class="">
+        <div id="choices-container">
             <div id="weapons-choices" class="hidden">
                 <div class="weapon choice">
                     <div class="img bl-book"></div>
@@ -446,6 +450,34 @@
                 </div>
                 <div class="stamp choice">
                     <div class="img weaken"></div>
+                </div>
+            </div>
+            <div id="stats-choices" class="hidden">
+                <p>Select stats in order of most prioritized to least prioritized.</p>
+                <p id="second-line">Not required to select all stats.</p>
+                <div>
+                    <div class="stat hp-up">
+                        <div class="order"></div>
+                    </div>
+                    <div class="stat atk-up">
+                        <div class="order"></div>
+                    </div>
+                    <div class="stat spd-up">
+                        <div class="order"></div>
+                    </div>
+                    <div class="stat crt-up">
+                        <div class="order"></div>
+                    </div>
+                    <div class="stat pick-up">
+                        <div class="order"></div>
+                    </div>
+                    <div class="stat haste-up">
+                        <div class="order"></div>
+                    </div>
+                </div>
+                <div id="options-container">
+                  <p id="confirm-order">Confirm</p>
+                  <p id="hide-stat-priority">Hide</p>
                 </div>
             </div>
         </div>
