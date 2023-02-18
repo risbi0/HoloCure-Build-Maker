@@ -132,11 +132,12 @@ function updateUnavailableWeapons(weapClassName, deleteEntry) {
     }
 }
 
+let collabLimit = 4
 function unhideWeapons(targetClass) {
     weaponsToBeUnhidden.add(targetClass);
     weaponsToBeUnhidden.forEach((weaponClass) => {
-        // continue banning collabs when >3 collabs are equipped
-        if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length > 3 &&
+        // continue banning collabs when >x collabs are equipped (depending on no. of active slots)
+        if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length > collabLimit - 1 &&
             collabWeapons.includes(weaponClass)) {
             remainingCollabs.push(weaponClass);
         } else if (weaponsClassNames.indexOf(weaponClass) !== -1) {
@@ -149,7 +150,7 @@ function unhideWeapons(targetClass) {
 }
 
 function checkCollabDisplay() {
-    if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length === 3) {
+    if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length === collabLimit - 1) {
         remainingCollabs.forEach((collab) => {
             weapons[weaponsClassNames.indexOf(collab)].classList.remove('hidden');
         });
@@ -188,7 +189,7 @@ weapons.forEach((weapon) => {
             }
         });
         // hide all remaining collabs on 4 weapons equipped
-        if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length === 4) {
+        if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length === collabLimit) {
             remainingCollabs = [];
             for (const key in collabForumlas) {
                 if (!unavailableWeapons.has(key)) {
@@ -349,50 +350,39 @@ slots.forEach((slot) => {
     });
 });
 
-// slot numbers
-const oldSlotValues = {
-    'weapon': 5,
-    'item': 6,
-    'stamp': 3
-}
-function handleSlotDisplays(t, gearType, length, slots, offset=0) {
-    const slotAmount = t.parentNode.querySelector('input[type=number]').value - offset;
-    if (oldSlotValues[gearType] > slotAmount) {
-        for (let i = length - 1; i >= slotAmount; i--) {
-            slots[i].style.display = 'none';
-        }
-    } else {
-        for (let i = 0; i < slotAmount; i++) {
-            slots[i].style.display = '';
-        }
-    }
-    oldSlotValues[gearType] = slotAmount;
-}
-
+// weapon slot display
 const weaponSlotsInput = document.querySelector('#weapon-slots');
 const weaponSlotsButtons = document.querySelectorAll('#weapon-slots button');
+let oldWeaponSlotValue = 5;
 weaponSlotsInput.addEventListener('keydown', e => e.preventDefault());
 weaponSlotsButtons.forEach((weaponSlotsButton) => {
     weaponSlotsButton.addEventListener('click', function() {
-        handleSlotDisplays(this, 'weapon', 5, weaponSlots, 1);
-    });
-});
-
-const itemSlotsInput = document.querySelector('#item-slots');
-const itemSlotsButtons = document.querySelectorAll('#item-slots button');
-itemSlotsInput.addEventListener('keydown', e => e.preventDefault());
-itemSlotsButtons.forEach((itemSlotsButton) => {
-    itemSlotsButton.addEventListener('click', function() {
-        handleSlotDisplays(this, 'item', 6, itemSlots);
-    });
-});
-
-const stampSlotsInput = document.querySelector('#stamp-slots');
-const stampSlotsButtons = document.querySelectorAll('#stamp-slots button');
-stampSlotsInput.addEventListener('keydown', e => e.preventDefault());
-stampSlotsButtons.forEach((stampSlotsButton) => {
-    stampSlotsButton.addEventListener('click', function() {
-        handleSlotDisplays(this, 'stamp', 3, stampSlots);
+        // hide slots based on value, decrease by 1 to include default weapon
+        const slotAmount = this.parentNode.querySelector('input[type=number]').value - 1;
+        if (oldWeaponSlotValue > slotAmount) {
+            for (let i = 5 - 1; i >= slotAmount; i--) {
+                weaponSlots[i].style.display = 'none';
+            }
+        } else {
+            for (let i = 0; i < slotAmount; i++) {
+                weaponSlots[i].style.display = '';
+            }
+        }
+        oldWeaponSlotValue = slotAmount;
+        // remove placed weapons
+        for (let i = 0; i < 5; i++) removeButtons[i].click();
+        // change collab limit
+        if (slotAmount > 1) {
+            collabLimit = slotAmount - 1;
+        } else {
+            collabLimit = 0;
+            // hide all collabs on 1 weapon slot available (excluding default weapon)
+            collabWeapons.forEach(collabWeapon => weapons[weaponsClassNames.indexOf(collabWeapon)].classList.add('hidden'));
+        }
+        if (oldWeaponSlotValue == 2) {
+            // show collabs on 2 weapon slots available (excluding default weapon)
+            collabWeapons.forEach(collabWeapon => weapons[weaponsClassNames.indexOf(collabWeapon)].classList.remove('hidden'));
+        }
     });
 });
 
@@ -453,6 +443,16 @@ showBuildName.addEventListener('change', (e) => {
         buildName.classList.remove('hidden');
     } else {
         buildName.classList.add('hidden');
+    }
+});
+// show stamps
+const stampsContainer = document.querySelector('#stamps-container');
+const showStamps = document.querySelector('#show-stamps');
+showStamps.addEventListener('change', (e) => {
+    if (e.target.checked) {
+        stampsContainer.classList.remove('hidden');
+    } else {
+        stampsContainer.classList.add('hidden');
     }
 });
 

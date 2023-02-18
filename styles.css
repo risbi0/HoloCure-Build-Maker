@@ -94,28 +94,23 @@ input[type="number"] {
 
 #settings {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    height: 500px;
-}
-
-#more-settings {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 500px;
     height: 350px;
+    width: 500px;
+    margin: 20px auto;
 }
 
 #left-container, #right-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
+    height: 100%;
 }
 
-#show-build-name-container {
+#show-build-name-container, #show-stamps-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -330,11 +325,7 @@ input:checked + .slider:before {
     flex-direction: column;
     align-items: center;
     background-color: var(--dark-bg-color);
-    padding: 20px;
-}
-#input-number h1 {
-    font-size: 20px;
-    margin-bottom: 10px;
+    padding: 15px;
 }
 #input-number div {
     border: 2px solid var(--font-color);
@@ -342,7 +333,7 @@ input:checked + .slider:before {
 }
 #input-number label {
     font-size: 14px;
-    margin: 10px auto;
+    margin-bottom: 10px;
 }
 #input-number button {
     width: 30px;
@@ -362,6 +353,11 @@ input:checked + .slider:before {
     height: 130px;
 }
 
+#save-image-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 #save-image {
     font-size: 16px;
     width: 175px;

@@ -131,80 +131,74 @@
       </div>
     </main>
     <div id="settings">
+      <div id="left-container">
         <div id="char-select-container">
-            <select id="char-select">
-                <option value="ame">Watson Amelia</option>
-                <option value="gura">Gawr Gura</option>
-                <option value="ina">Ninomae Ina'nis</option>
-                <option value="kiara">Takanashi Kiara</option>
-                <option value="calli">Calliope Mori</option>
-                <option value="bae">Hakos Baelz</option>
-                <option value="kronii">Ouro Kronii</option>
-                <option value="fauna">Ceres Fauna</option>
-                <option value="mumei">Nanashi Mumei</option>
-                <option value="sana">Tsukomo Sana</option>
-                <option value="irys">IRyS</option>
-                <option value="sora">Tokino Sora</option>
-                <option value="azki">AZKi</option>
-                <option value="roboco">Roboco</option>
-                <option value="suisei">Hoshimachi Suisei</option>
-                <option value="miko">Sakura Miko</option>
-                <option value="fubuki">Shirakami Fubuki</option>
-                <option value="mio">Ookami Mio</option>
-                <option value="okayu">Nekomata Okayu</option>
-                <option value="korone">Inugami Korone</option>
-                <option value="haato">Akai Haato</option>
-                <option value="mel">Yozora Mel</option>
-                <option value="matsuri">Natsuiro Matsuri</option>
-                <option value="aki">Aki Rosenthal</option>
-                <option value="subaru">Oozora Subaru</option>
-                <option value="choco">Yuzuki Choco</option>
-                <option value="shion">Murasaki Shion</option>
-                <option value="ayame">Nakiri Ayame</option>
-                <option value="aqua">Minato Aqua</option>
-            </select>
+          <select id="char-select">
+              <option value="ame">Watson Amelia</option>
+              <option value="gura">Gawr Gura</option>
+              <option value="ina">Ninomae Ina'nis</option>
+              <option value="kiara">Takanashi Kiara</option>
+              <option value="calli">Calliope Mori</option>
+              <option value="bae">Hakos Baelz</option>
+              <option value="kronii">Ouro Kronii</option>
+              <option value="fauna">Ceres Fauna</option>
+              <option value="mumei">Nanashi Mumei</option>
+              <option value="sana">Tsukomo Sana</option>
+              <option value="irys">IRyS</option>
+              <option value="sora">Tokino Sora</option>
+              <option value="azki">AZKi</option>
+              <option value="roboco">Roboco</option>
+              <option value="suisei">Hoshimachi Suisei</option>
+              <option value="miko">Sakura Miko</option>
+              <option value="fubuki">Shirakami Fubuki</option>
+              <option value="mio">Ookami Mio</option>
+              <option value="okayu">Nekomata Okayu</option>
+              <option value="korone">Inugami Korone</option>
+              <option value="haato">Akai Haato</option>
+              <option value="mel">Yozora Mel</option>
+              <option value="matsuri">Natsuiro Matsuri</option>
+              <option value="aki">Aki Rosenthal</option>
+              <option value="subaru">Oozora Subaru</option>
+              <option value="choco">Yuzuki Choco</option>
+              <option value="shion">Murasaki Shion</option>
+              <option value="ayame">Nakiri Ayame</option>
+              <option value="aqua">Minato Aqua</option>
+          </select>
         </div>
-        <div id="more-settings">
-          <div id="left-container">
-            <div id="input-number">
-              <h1>Slot #</h1>
-              <label for="weapon-slots">Weapon</label>
-              <div id="weapon-slots">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                <input name="weapon-slots" type="number" min="1" max="6" value="6">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-              </div>
-              <label for="item-slots">Item</label>
-              <div id="item-slots">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                <input name="item-slots" type="number" min="0" max="6" value="6">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-              </div>
-              <label for="stamp-slots">Stamp</label>
-              <div id="stamp-slots">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                <input name="stamp-slots" type="number" min="0" max="3" value="3">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-              </div>
-            </div>
-            <button id="add-stat-prio">Stat Priority</button>
-          </div>
-          <div id="right-container">
-            <div id="show-build-name-container">
-              <p>Show Build Name</p>
-              <label class="switch">
-                <input type="checkbox" id="show-build-name">
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div id="clear-btn-container">
-              <button id="clear-weapons">Clear Weapons</button>
-              <button id="clear-items">Clear Items</button>
-              <button id="clear-stamps">Clear Stamps</button>
-            </div>
+        <div id="input-number">
+          <label for="weapon-slots">Weapon Slot #</label>
+          <div id="weapon-slots">
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+            <input name="weapon-slots" type="number" min="1" max="6" value="6">
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
           </div>
         </div>
-        <button id="save-image">Save Image</button>
+        <button id="add-stat-prio">Stat Priority</button>
+      </div>
+      <div id="right-container">
+        <div id="show-build-name-container">
+          <p>Show Build Name</p>
+          <label class="switch">
+            <input type="checkbox" id="show-build-name">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="show-stamps-container">
+          <p>Show Stamps</p>
+          <label class="switch">
+            <input type="checkbox" id="show-stamps" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="clear-btn-container">
+          <button id="clear-weapons">Clear Weapons</button>
+          <button id="clear-items">Clear Items</button>
+          <button id="clear-stamps">Clear Stamps</button>
+        </div>
+      </div>
+    </div>
+    <div id="save-image-container">
+      <button id="save-image">Save Image</button>
     </div>
 
     <div id="choices-bg" class="hidden">
