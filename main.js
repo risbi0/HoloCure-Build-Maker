@@ -118,7 +118,25 @@ function updateUnavailableWeapons(weapClassName, deleteEntry) {
         // basic weapons
         if (basicWeapons.includes(weapClassName) && collabForumlas[key].includes(weapClassName)) {
             unavailableWeapons.add(key);
-            if (deleteEntry) weaponsToBeUnhidden.add(key);
+            if (deleteEntry) {
+                // get other weapon that makes up the collab
+                const partnerWeapClassName = collabForumlas[key].filter(weap => weap !== weapClassName)[0];
+                // check if the partner weapon is part of an active collab
+                // ex. active weaps: Broken Dreams, Fan Beam
+                // Fan Beam is removed, code identifies related collabs
+                // one of the collabs is Stream of Tears, but that requires CEO's tears, which is already used in Broken Dreams
+                // this boolean prevents unhiding collabs like those
+                let partnerWeapNotInActiveCollab = true;
+                for (const key2 in collabForumlas) {
+                    if (collabForumlas[key2].includes(partnerWeapClassName) && equippedWeapons.includes(key2)) {
+                        partnerWeapNotInActiveCollab = false;
+                        break;
+                    }
+                }
+                if (partnerWeapNotInActiveCollab) {
+                    weaponsToBeUnhidden.add(key);
+                }
+            }
         }
         // collabs
         else if (collabWeapons.includes(weapClassName) && key === weapClassName) {
