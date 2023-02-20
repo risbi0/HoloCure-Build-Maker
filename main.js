@@ -111,54 +111,50 @@ weaponSlots.forEach((weaponSlot) => {
     });
 });
 
+// process for hiding/unhiding basic weapons and collabs:
+// basic weapon selected -> hide/unhide selected, all related collabs
+// collabs selected -> hide/unhide selected, respective component weapons, all collabs related to component weapons
 const unavailableWeapons = new Set();
-let weaponsToBeUnhidden;
-function updateUnavailableWeapons(weapClassName, deleteEntry) {
-    for (const key in collabForumlas) {
+let weaponsToBeUnhidden, collabLimit = 4;
+function updateUnavailableWeapons(weaponClassName, unhide) {
+    for (const collabWeapon in collabForumlas) {
         // basic weapons
-        if (basicWeapons.includes(weapClassName) && collabForumlas[key].includes(weapClassName)) {
-            unavailableWeapons.add(key);
-            if (deleteEntry) {
+        if (basicWeapons.includes(weaponClassName) && collabForumlas[collabWeapon].includes(weaponClassName)) {
+            unavailableWeapons.add(collabWeapon);
+            if (unhide) {
                 // get other weapon that makes up the collab
-                const partnerWeapClassName = collabForumlas[key].filter(weap => weap !== weapClassName)[0];
+                const partnerWeapClassName = collabForumlas[collabWeapon].filter(weap => weap !== weaponClassName)[0];
                 // check if the partner weapon is part of an active collab
                 // ex. active weaps: Broken Dreams, Fan Beam
                 // Fan Beam is removed, code identifies related collabs
                 // one of the collabs is Stream of Tears, but that requires CEO's tears, which is already used in Broken Dreams
                 // this boolean prevents unhiding collabs like those
-                let partnerWeapNotInActiveCollab = true;
-                for (const key2 in collabForumlas) {
-                    if (collabForumlas[key2].includes(partnerWeapClassName) && equippedWeapons.includes(key2)) {
-                        partnerWeapNotInActiveCollab = false;
-                        break;
-                    }
-                }
-                if (partnerWeapNotInActiveCollab) {
-                    weaponsToBeUnhidden.add(key);
-                }
+                let partnerWeapInActiveCollab = Object.entries(collabForumlas).some(([collab, formula]) => {
+                    return equippedWeapons.includes(collab) && formula.includes(partnerWeapClassName);
+                });
+                if (!partnerWeapInActiveCollab) weaponsToBeUnhidden.add(collabWeapon);
             }
         }
         // collabs
-        else if (collabWeapons.includes(weapClassName) && key === weapClassName) {
-            [...collabForumlas[key]].forEach((weap) => {
+        else if (collabWeapons.includes(weaponClassName) && collabWeapon === weaponClassName) {
+            [...collabForumlas[collabWeapon]].forEach((weap) => {
                 unavailableWeapons.add(weap);
-                if (deleteEntry) weaponsToBeUnhidden.add(weap);
+                if (unhide) weaponsToBeUnhidden.add(weap);
             });
             // ban collabs relating to basic weapons used for the initial collab
-            collabForumlas[key].forEach(formula => updateUnavailableWeapons(formula, deleteEntry));
+            collabForumlas[collabWeapon].forEach(formula => updateUnavailableWeapons(formula, unhide));
         }
     }
 }
 
-let collabLimit = 4
 function unhideWeapons(targetClass) {
-    weaponsToBeUnhidden.add(targetClass);
+    weaponsToBeUnhidden.add(targetClass); // add selected weapon
     weaponsToBeUnhidden.forEach((weaponClass) => {
         // continue banning collabs when >x collabs are equipped (depending on no. of active slots)
         if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length > collabLimit - 1 &&
             collabWeapons.includes(weaponClass)) {
             remainingCollabs.push(weaponClass);
-        } else if (weaponsClassNames.indexOf(weaponClass) !== -1) {
+        } else {
             weapons[weaponsClassNames.indexOf(weaponClass)].classList.remove('hidden');
         }
         unavailableWeapons.delete(weaponClass);
@@ -167,7 +163,8 @@ function unhideWeapons(targetClass) {
     equippedWeapons.splice(equippedWeapons.indexOf(targetClass), 1);
 }
 
-function checkCollabDisplay() {
+// enable collab options when a collab is removed from 4 collabs
+function unhideRemainingCollabs() {
     if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length === collabLimit - 1) {
         remainingCollabs.forEach((collab) => {
             weapons[weaponsClassNames.indexOf(collab)].classList.remove('hidden');
@@ -191,20 +188,18 @@ weapons.forEach((weapon) => {
         weaponsMenu.classList.add('hidden');
 
         // unhide replaced gear
-        if (weaponsClassNames.indexOf(oldClassName) !== -1 && oldClassName !== undefined) {
+        if (oldClassName !== undefined) {
             weaponsToBeUnhidden = new Set();
             updateUnavailableWeapons(oldClassName, true);
             unhideWeapons(oldClassName);
-            checkCollabDisplay();
+            unhideRemainingCollabs();
         }
         // hide related gear in choices
         equippedWeapons.push(weapClassName); // update selected gears
         updateUnavailableWeapons(weapClassName, false);
         unavailableWeapons.add(weapClassName); // add selected gear
         unavailableWeapons.forEach((unavailableWeapon) => {
-            if (weaponsClassNames.indexOf(unavailableWeapon) !== -1) {
-                weapons[weaponsClassNames.indexOf(unavailableWeapon)].classList.add('hidden');
-            }
+            weapons[weaponsClassNames.indexOf(unavailableWeapon)].classList.add('hidden');
         });
         // hide all remaining collabs on 4 weapons equipped
         if (equippedWeapons.filter(weap => collabWeapons.includes(weap)).length === collabLimit) {
@@ -248,9 +243,7 @@ items.forEach((item) => {
         itemsMenu.classList.add('hidden');
         
         // unhide replaced gear
-        if (itemsClassNames.indexOf(oldClassName) !== -1 && oldClassName !== undefined) {
-            updateItemChoices(oldClassName);
-        }
+        if (oldClassName !== undefined) updateItemChoices(oldClassName);
         // hide selected gear in choices
         items[itemsClassNames.indexOf(imgClassName)].classList.add('hidden');
     });
@@ -295,25 +288,24 @@ stamps.forEach((stamp) => {
 const removeButtons = document.querySelectorAll('.remove');
 removeButtons.forEach((removeButton) => {
     removeButton.addEventListener('click', (e) => {
+        // hide image
         const imageClasses = removeButton.parentNode.children[0].classList;
         const targetClass = imageClasses[1];
         imageClasses.remove(targetClass);
-        // unhide choices elements
-        if (itemsClassNames.indexOf(targetClass) !== -1) {
+
+        const gearType = e.target.parentNode.classList[0];
+        // unhide:
+        if (gearType === 'item') {
             updateItemChoices(targetClass);
-        }
-        if (stampsClassNames.indexOf(targetClass) !== -1) {
+        } else if (gearType === 'stamp') {
             updateStampChoices(targetClass);
-        }
-        if (weaponsClassNames.indexOf(targetClass) !== -1) {
+        } else if (gearType === 'weapon') {
             weaponsToBeUnhidden = new Set();
             updateUnavailableWeapons(targetClass, true);
             unhideWeapons(targetClass);
+            unhideRemainingCollabs();
         }
-        // enable collab options when a collab is removed from 4 collabs
-        if (e.target.parentNode.classList.contains('weapon')) {
-            checkCollabDisplay();
-        }
+
         // bring back add symbol
         removeButton.parentNode.children[0].children[0].textContent = 'add';
         // stop event trigger on parent
@@ -412,8 +404,7 @@ addStatPriority.addEventListener('click', () => {
     statsMenu.classList.remove('hidden');
 });
 const statChoicesStat = document.querySelectorAll('#stats-choices .stat');
-let statPriorityList = [];
-let order = 1;
+let statPriorityList = [], order = 1;
 statChoicesStat.forEach((stat) => {
     stat.addEventListener('click', () => {
         // unordered stat, assign order
@@ -474,19 +465,20 @@ showStamps.addEventListener('change', (e) => {
     }
 });
 
+function clickRemoveButtons(lower, upper) {
+    for (let i = lower; i < upper; i++) {
+        if(removeButtons[i].parentNode.children[0].classList.length !== 1) {
+            removeButtons[i].click();
+        }
+    }
+}
 // clear buttons
 const clearWeapons = document.querySelector('#clear-weapons');
-clearWeapons.addEventListener('click', () => {
-    for (let i = 0; i < 5; i++) removeButtons[i].click();
-});
+clearWeapons.addEventListener('click', () => clickRemoveButtons(0, 5));
 const clearItems = document.querySelector('#clear-items');
-clearItems.addEventListener('click', () => {
-    for (let i = 5; i < 11; i++) removeButtons[i].click();
-});;
+clearItems.addEventListener('click', () => clickRemoveButtons(5, 11));
 const clearStamps = document.querySelector('#clear-stamps');
-clearStamps.addEventListener('click', () => {
-    for (let i = 11; i < 14; i++) removeButtons[i].click();
-});;
+clearStamps.addEventListener('click', () => clickRemoveButtons(11, 14));
 
 // save build as image
 const capture = document.querySelector('#save-image');
