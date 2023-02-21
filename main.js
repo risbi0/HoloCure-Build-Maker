@@ -435,12 +435,15 @@ const confirmOrder = document.querySelector('#confirm-order');
 confirmOrder.addEventListener('click', () => {
     choicesBg.classList.add('hidden');
     statsMenu.classList.add('hidden');
-    statPriority.classList.remove('hidden');
-    statChoicesStat.forEach((stat) => stat.querySelector('.order').textContent = null); // remove order display
-    statPriority.innerHTML = statPriorityList.map(cssClass => `<span class="stat ${cssClass}"></span>`).join(' > ');
-    // reinitialize order no. and prio list
-    order = 1
-    statPriorityList = [];
+    // execute if there's actually choices chosen
+    if (statPriorityList.length !== 0) {   
+        statChoicesStat.forEach((stat) => stat.querySelector('.order').textContent = null); // remove order display
+        statPriority.innerHTML = statPriorityList.map(cssClass => `<span class="stat ${cssClass}"></span>`).join(' > ');
+        statPriority.classList.remove('hidden');
+        // reinitialize order no. and prio list
+        order = 1
+        statPriorityList = [];
+    }
 });
 const hideStatPriority = document.querySelector('#hide-stat-priority');
 hideStatPriority.addEventListener('click', () => statPriority.classList.add('hidden'));
