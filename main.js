@@ -380,7 +380,7 @@ weaponSlotsButtons.forEach((weaponSlotsButton) => {
         }
         oldWeaponSlotValue = slotAmount;
         // remove placed weapons
-        for (let i = 0; i < 5; i++) removeButtons[i].click();
+        clickRemoveButtons(0, 5);
         // change collab limit
         if (slotAmount > 1) {
             collabLimit = slotAmount - 1;
