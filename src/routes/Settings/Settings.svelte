@@ -63,57 +63,64 @@
 </script>
 
 <div id="settings">
-    <div id="left-container">
-        <div id="char-select-container">
-            <select id="char-select" on:change={(e) => charSelected.set(e.target.value)}>
-                {#each characters as character}
-                    <option value="{character}">{character}</option>
-                {/each}
-            </select>
-        </div>
-        <div id="input-number">
-            <p for="weapon-slots">Weapon Slot #</p>
-            <div id="weapon-slots">
-                <button class="minus" on:click={() => weaponSlotAmount(-1)}></button>
-                <div>{weaponSlots}</div>
-                <button class="plus" on:click={() => weaponSlotAmount(1)}></button>
-            </div>
-        </div>
-        <button id="add-stat-prio" on:click={showStatChoices}>Stat Priority</button>
-    </div>
-    <div id="right-container">
-        <div id="show-build-name-container">
-            <p>Show Build Name</p>
-            <label class="switch">
-                <input type="checkbox" on:change={(e) => showBuildName.set(e.target.checked)}>
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div id="show-stamps-container">
-            <p>Show Stamps</p>
-            <label class="switch">
-                <input type="checkbox" checked on:change={(e) => showStamps.set(e.target.checked)}>
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div id="clear-btn-container">
-            <button on:click={() => clearWeapons()}>Clear Weapons</button>
-            <button on:click={() => clearItems()}>Clear Items</button>
-            <button on:click={() => clearStamps()}>Clear Stamps</button>
-        </div>
-    </div>
+	<div id="char-select-container">
+		<select id="char-select" on:change={(e) => charSelected.set(e.target.value)}>
+			{#each characters as character}
+				<option value="{character}">{character}</option>
+			{/each}
+		</select>
+	</div>
+	<div id="more-settings">
+		<div id="left-container">
+			<div id="input-number">
+				<p for="weapon-slots">Weapon Slot #</p>
+				<div id="weapon-slots">
+					<button class="minus" on:click={() => weaponSlotAmount(-1)}></button>
+					<div>{weaponSlots}</div>
+					<button class="plus" on:click={() => weaponSlotAmount(1)}></button>
+				</div>
+			</div>
+			<div id="show-stamps-container">
+				<p>Show Stamps</p>
+				<label class="switch">
+					<input type="checkbox" checked on:change={(e) => showStamps.set(e.target.checked)}>
+					<span class="slider"></span>
+				</label>
+			</div>
+			<button id="add-stat-prio" on:click={showStatChoices}>Stat Priority</button>
+		</div>
+		<div id="right-container">
+			<div id="show-build-name-container">
+				<p>Show Build Name</p>
+				<label class="switch">
+					<input type="checkbox" on:change={(e) => showBuildName.set(e.target.checked)}>
+					<span class="slider"></span>
+				</label>
+			</div>
+			<div id="clear-btn-container">
+				<button on:click={() => clearWeapons()}>Clear Weapons</button>
+				<button on:click={() => clearItems()}>Clear Items</button>
+				<button on:click={() => clearStamps()}>Clear Stamps</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style lang="scss">
     #settings {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-around;
-        height: 350px;
         width: 500px;
         margin: 20px auto;
     }
+
+	#more-settings {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		width: 100%;
+	}
 
     #char-select-container {
         position: relative;
@@ -121,6 +128,7 @@
         width: 200px;
         height: 45px;
         overflow: hidden;
+		margin-bottom: 20px;
 
         &::after {
             content: '\25BC';
@@ -178,6 +186,7 @@
         align-items: center;
         background-color: var(--dark-bg-color);
         padding: 15px;
+		margin: 10px auto;
 
         div {
             border: 2px solid var(--font-color);
@@ -218,6 +227,10 @@
         }
     }
 
+	#add-stat-prio {
+		margin: 10px auto;
+	}
+
     #show-build-name-container, #show-stamps-container {
         display: flex;
         flex-direction: column;
@@ -226,6 +239,7 @@
         height: 65px;
 		background-color: var(--dark-bg-color);
 		padding: 15px;
+		margin: 20px auto;
     }
 
     .switch {
@@ -277,5 +291,6 @@
         flex-direction: column;
         justify-content: space-between;
         height: 130px;
+		margin: 5px auto;
     }
 </style>
