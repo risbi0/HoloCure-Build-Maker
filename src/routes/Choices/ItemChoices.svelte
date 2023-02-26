@@ -90,6 +90,10 @@
 </div>
 
 <style lang="scss">
+	.item:hover {
+		background-color: #3F9744;
+	}
+
     :global(.blacksmiths-gear) { background-image: url("/img/item/Blacksmith's_Gear_Icon.png"); }
     :global(.body-pillow) { background-image: url("/img/item/Body_Pillow_Icon.png"); }
     :global(.breastplate) { background-image: url("/img/item/Breastplate_Icon.png"); }

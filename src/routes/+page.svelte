@@ -34,8 +34,26 @@
         --dark-bg-color: #18181B;
     }
 
+	:global(::-webkit-scrollbar) {
+		width: 6px;
+	}
+	:global(::-webkit-scrollbar-thumb) {
+		background-color: var(--font-color);
+		border-radius: 10px;
+
+		&:hover {
+			background-color: white;
+		}
+	}
+	:global(::-webkit-scrollbar-track) {
+		background-color: var(--bg-color);
+	}
+
     :global(*) {
         color: var(--font-color);
+		/* mozilla scrollbar */
+		scrollbar-color: var(--font-color) var(--bg-color) !important;
+    	scrollbar-width: thin !important;
     }
 
     :global(body) {
@@ -59,6 +77,7 @@
     }
 
     :global(button) {
+		position: relative;
         cursor: pointer;
         border: none;
         width: 130px;
@@ -67,10 +86,10 @@
         background-color: var(--dark-bg-color);
         padding-bottom: 5px;
 
-    }
-    :global(button:hover) {
-        color: white;
-        font-weight: 600;
+		&:hover {
+			background-color: var(--font-color);
+			color: var(--dark-bg-color);
+		}
     }
 
     :global(input:focus, select:focus, button:focus) {
@@ -105,10 +124,6 @@
         height: 40px;
     }
 
-    :global(.slot) {
-        position: relative;
-    }
-
     :global(.weapon) {
         border: 3px solid #4779F4;
     }
@@ -125,6 +140,7 @@
         display: flex;
         justify-content: center;
         width: 100%;
+		margin-bottom: 50px;
     }
     #save-image {
         font-size: 16px;

@@ -30,13 +30,14 @@
     </div>
 </div>
 
-<style>
+<style lang="scss">
     #choices-bg {
         position: fixed;
         top: 0;
         background-color: rgba(0, 0, 0, 0.3);
         width: 100%;
         height: 100%;
+		z-index: 1;
     }
 
     #choices-container {
@@ -44,15 +45,15 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+		border: 3px solid var(--font-color);
         background-color: #171717;
-        padding: 5px;
+        padding: 10px;
     }
 
-    :global(#weapon-choices, #item-choices, #stamp-choices) {
+    :global(#basic-choices, #collab-choices, #item-choices, #stamp-choices) {
         display: flex;
         flex-flow: row wrap;
-        justify-content: start;
-        align-content: start;
+        justify-content: center;
         width: 530px;
     }
 

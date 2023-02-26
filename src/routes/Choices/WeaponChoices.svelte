@@ -179,6 +179,10 @@
 </div>
 
 <style lang="scss">
+	.weapon:hover {
+		background-color: #1B41A0;
+	}
+
     :global(.bl-book) { background-image: url("/img/weapon/basic/BL_Book_Icon.png"); }
     :global(.bounce-ball) { background-image: url("/img/weapon/basic/Bounce_Ball_Icon.png"); }
     :global(.ceos-tears) { background-image: url("/img/weapon/basic/CEO's_Tears_Icon.png"); }

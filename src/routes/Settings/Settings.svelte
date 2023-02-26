@@ -128,13 +128,14 @@
             top: 0;
             right: 0;
             padding: 15px;
-            color: #3F3F46;
+            color: var(--font-color);
             background-color: var(--dark-bg-color);
             pointer-events: none;
         }
 
         &:hover::after {
-            color: #A3A3A3;
+			background-color: var(--font-color);
+            color: var(--dark-bg-color);
         }
     }
 
@@ -147,7 +148,21 @@
         background-color: var(--dark-bg-color);
         background-image: none;
         cursor: pointer;
+
+		&:hover {
+			background-color: var(--font-color);
+			color: var(--dark-bg-color);
+
+			option {
+				background-color: var(--dark-bg-color);
+				color: var(--font-color);
+			}
+		}
     }
+
+	select::-webkit-scrollbar-track {
+		background-color: var(--dark-bg-color);
+	}
 
     #left-container, #right-container {
         display: flex;
@@ -184,7 +199,8 @@
     .minus:after { content: '\2212'; }
     .plus:after { content: '\002B'; }
     .minus:after, .plus:after {
-        font-size: 16px;
+		font-size: 16px;
+		margin-left: 2px;
     }
 
     #weapon-slots {
@@ -208,6 +224,8 @@
         justify-content: space-between;
         align-items: center;
         height: 65px;
+		background-color: var(--dark-bg-color);
+		padding: 15px;
     }
 
     .switch {

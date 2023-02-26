@@ -80,6 +80,10 @@
 </div>
 
 <style lang="scss">
+	.stamp:hover {
+		background-color: #C2B971;
+	}
+
     :global(.atk) { background-image: url("/img/stamp/ATK_Up_Stamp_Icon.png"); }
     :global(.bomb) { background-image: url("/img/stamp/Bomb_Stamp_Icon.png"); }
     :global(.crit) { background-image: url("/img/stamp/Crit_Up_Stamp_Icon.png"); }

@@ -26,6 +26,7 @@
     }
 
     :global(.slot) {
+		position: relative;
         cursor: pointer;
         margin: 5px;
         padding: 5px;

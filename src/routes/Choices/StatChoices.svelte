@@ -70,7 +70,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 10px;
+		text-align: center;
+
+        > p {
+			line-height: 20px;
+		}
 
         > p:nth-child(2) {
             margin-top: 10px;
@@ -99,8 +103,13 @@
         }
 
         p {
-            margin-top: 20px;
-            margin-bottom: 10px;
+            padding-top: 20px;
+            padding-bottom: 10px;
+
+			&:hover {
+				padding-bottom: 7px;
+				border-bottom: 3px solid var(--font-color);
+			}
         }
     }
 
