@@ -1,0 +1,126 @@
+<script>
+    import {
+        displayChoices,
+        displayStatChoices,
+        statPriorityOrder,
+        showPriorityOrder
+    } from "../../stores";
+
+    export let display;
+
+    const stats = ['hp-up', 'atk-up', 'spd-up', 'crt-up', 'pick-up', 'haste-up'];
+    const statPriorityDisplay = Array(stats.length).fill('');
+    let currentOrder = 1;
+
+    function manageOrder(stat, index) {
+        // unordered stat, assign order
+        if (statPriorityDisplay[index] === '') {
+            statPriorityDisplay[index] = currentOrder;
+            currentOrder += 1;
+        } else {
+            // ordered stat selected, remove order
+            const removedOrder = statPriorityDisplay[index];
+            statPriorityDisplay[index] = '';
+            currentOrder -= 1;
+
+            // rearrange existing orders
+            for (let i = 0; i < statPriorityDisplay.length; i++) {
+                if (statPriorityDisplay[i] > removedOrder) {
+                    statPriorityDisplay[i] -= 1;
+                }
+            }
+        }
+    }
+
+    function confirm() {
+        // assign array for display
+        const statPriorityList = [];
+        statPriorityDisplay.forEach((order, index) => statPriorityList[order - 1] = stats[index]);
+        statPriorityOrder.set(statPriorityList);
+
+        // display in frame
+        showPriorityOrder.set(true);
+
+        // hide menu
+        displayChoices.set(false);
+        displayStatChoices.set(false);
+    }
+</script>
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div id="stats-choices" class="{display}">
+    <p>Select stats in order of most prioritized to least prioritized.</p>
+    <p>Not required to select all stats.</p>
+    <div>
+        {#each stats as stat, index}
+            <div class="stat {stat}" on:click={() => manageOrder(stat, index)}>
+                <div class="order">{statPriorityDisplay[index]}</div>
+            </div>
+        {/each}
+    </div>
+    <div id="options-container">
+        <p id="confirm-order" on:click={confirm}>Confirm</p>
+        <p id="hide-stat-priority" on:click={() => showPriorityOrder.set(false)}>Hide</p>
+    </div>
+</div>
+
+<style lang="scss">
+    #stats-choices {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+
+        > p:nth-child(2) {
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        div:hover {
+            cursor: pointer;
+        }
+
+        .order {
+            position: absolute;
+            top: -15px;
+            font-size: 10px;
+        }
+    }
+
+    #options-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 150px;
+
+        #confirm-order, #hide-stat-priority {
+            cursor: pointer;
+        }
+
+        p {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    }
+
+    :global(.stat) {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background-size: auto 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        width: 24px;
+        height: 24px;
+        margin: auto 5px;
+    }
+
+    :global(.atk-up) { background-image: url("/img/stat/ATK_Up_Icon.png"); }
+    :global(.crt-up) { background-image: url("/img/stat/Crit_Up_Icon.png"); }
+    :global(.haste-up) { background-image: url("/img/stat/Haste_Up_Icon.png"); }
+    :global(.hp-up) { background-image: url("/img/stat/Max_HP_Up_Icon.png"); }
+    :global(.pick-up) { background-image: url("/img/stat/Pick_Up_Range_Icon.png"); }
+    :global(.spd-up) { background-image: url("/img/stat/SPD_Up_Icon.png"); }
+</style>

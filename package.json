@@ -1,15 +1,23 @@
 {
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^4.1.0"
-  },
-  "dependencies": {
-    "file-saver": "^2.0.5",
-    "html2canvas": "^1.4.1"
-  }
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"deploy": "node deploy.js"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-static": "^2.0.1",
+		"@sveltejs/kit": "^1.5.0",
+		"gh-pages": "^5.0.0",
+		"sass": "^1.58.3",
+		"svelte": "^3.54.0",
+		"svelte-check": "^3.0.1",
+		"typescript": "^4.9.3",
+		"vite": "^4.0.0"
+	},
+	"dependencies": {
+		"file-saver": "^2.0.5",
+		"html2canvas": "^1.4.1"
+	}
 }
