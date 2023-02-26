@@ -12,7 +12,7 @@
     const statPriorityDisplay = Array(stats.length).fill('');
     let currentOrder = 1;
 
-    function manageOrder(stat, index) {
+    function manageOrder(index) {
         // unordered stat, assign order
         if (statPriorityDisplay[index] === '') {
             statPriorityDisplay[index] = currentOrder;
@@ -57,7 +57,7 @@
     <p>Not required to select all stats.</p>
     <div>
         {#each stats as stat, index}
-            <div class="stat {stat}" on:click={() => manageOrder(stat, index)}>
+            <div class="stat {stat}" on:click={() => manageOrder(index)}>
                 <div class="order">{statPriorityDisplay[index]}</div>
             </div>
         {/each}
