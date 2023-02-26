@@ -38,8 +38,12 @@
         statPriorityDisplay.forEach((order, index) => statPriorityList[order - 1] = stats[index]);
         statPriorityOrder.set(statPriorityList);
 
-        // display in frame
-        showPriorityOrder.set(true);
+		if (statPriorityList.length !== 0) {
+			// display in frame
+			showPriorityOrder.set(true);
+		} else {
+			showPriorityOrder.set(false);
+		}
 
         // hide menu
         displayChoices.set(false);
