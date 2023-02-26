@@ -112,7 +112,7 @@
         flex-direction: column;
         align-items: center;
         width: 500px;
-        margin: 20px auto;
+        margin: 40px auto;
     }
 
 	#more-settings {
