@@ -49,7 +49,7 @@
         displayStampChoices.set(false);
     }
 
-    $: if($removeStamp) {
+    $: if ($removeStamp) {
         showPrevious();
 
         // remove item in equipped items
