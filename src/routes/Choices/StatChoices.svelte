@@ -9,8 +9,7 @@
     export let display;
 
     const stats = ['hp-up', 'atk-up', 'spd-up', 'crt-up', 'pick-up', 'haste-up'];
-    const statPriorityDisplay = Array(stats.length).fill('');
-    let currentOrder = 1;
+    let statPriorityDisplay = Array(stats.length).fill(''), currentOrder = 1, statPriorityList = [];
 
     function manageOrder(index) {
         // unordered stat, assign order
@@ -32,11 +31,19 @@
         }
     }
 
-    function confirm() {
+    function clickHandler(confirm) {
         // assign array for display
-        const statPriorityList = [];
-        statPriorityDisplay.forEach((order, index) => statPriorityList[order - 1] = stats[index]);
-        statPriorityOrder.set(statPriorityList);
+        statPriorityList = [];
+
+		if (confirm) {
+			statPriorityDisplay.forEach((order, index) => statPriorityList[order - 1] = stats[index]);
+		} else {
+			// reset variables
+			statPriorityDisplay = Array(stats.length).fill('');
+			currentOrder = 1;
+		}
+
+		statPriorityOrder.set(statPriorityList);
 
 		if (statPriorityList.length !== 0) {
 			// display in frame
@@ -63,8 +70,8 @@
         {/each}
     </div>
     <div id="options-container">
-        <p id="confirm-order" on:click={confirm}>Confirm</p>
-        <p id="hide-stat-priority" on:click={() => showPriorityOrder.set(false)}>Hide</p>
+        <p id="confirm" on:click={() => clickHandler(true)}>Confirm</p>
+        <p id="clear" on:click={() => clickHandler(false)}>Clear</p>
     </div>
 </div>
 
@@ -102,7 +109,7 @@
         justify-content: space-between;
         width: 150px;
 
-        #confirm-order, #hide-stat-priority {
+        #confirm, #clear {
             cursor: pointer;
         }
 
