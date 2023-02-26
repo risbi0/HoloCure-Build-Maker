@@ -44,10 +44,9 @@
         'snow-sake': ['glowstick', 'wamy-water'],
         'stream-of-tears': ['ceos-tears', 'fan-beam']
     };
-    const weapons = basicWeapons.concat(collabWeapons);
-
     // initialize weapon displays
-    let availableWeapons = weapons.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
+    let availableBasicWeapons = basicWeapons.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
+    let availableCollabWeapons = collabWeapons.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
     let unavailableWeapons, remainingCollabs = [], oldWeaponSlotValue;
 
     // process for hiding/unhiding basic weapons and collabs:
@@ -71,17 +70,18 @@
     }
 
     function reinitialize() {
-        availableWeapons = weapons.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
+        availableBasicWeapons = basicWeapons.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
+		availableCollabWeapons = collabWeapons.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
         unavailableWeapons = new Set();
 
         // hide all collabs
         if ($collabLimit === 0) {
-            collabWeapons.forEach(collabWeapon => availableWeapons[collabWeapon] = false);
+            collabWeapons.forEach(collabWeapon => availableCollabWeapons[collabWeapon] = false);
         }
 
         // reenable collabs on 2 weapon slots available (excluding default weapon) and coming from less slots
         if (oldWeaponSlotValue === 2 && $equippedWeapons.length === 2) {
-            collabWeapons.forEach(collabWeapon => availableWeapons[collabWeapon] = true);
+            collabWeapons.forEach(collabWeapon => availableCollabWeapons[collabWeapon] = true);
         }
 
         oldWeaponSlotValue = $equippedWeapons.length;
@@ -108,11 +108,12 @@
         }
 
         // assign availability
-        for (const weapon in availableWeapons) {
+        [...Object.keys(availableBasicWeapons), ...Object.keys(availableCollabWeapons)].forEach((weapon) => {
             if (unavailableWeapons.has(weapon)) {
-                availableWeapons[weapon] = false;
+                availableBasicWeapons[weapon] = false;
+				availableCollabWeapons[weapon] = false;
             }
-        }
+        });
     }
 
     function clickHandler(weapon) {
@@ -155,14 +156,26 @@
 </script>
 
 <div id="weapon-choices" class="{display}">
-    {#each Object.entries(availableWeapons) as [weapon, available]}
-        {#if available}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div class="weapon choice" on:click={() => clickHandler(weapon)}>
-                <div class="img {weapon}"></div>
-            </div>
-        {/if}
-    {/each}
+	<div id="basic-choices">
+		{#each Object.entries(availableBasicWeapons) as [basicWeapon, available]}
+			{#if available}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div class="weapon choice" on:click={() => clickHandler(basicWeapon)}>
+					<div class="img {basicWeapon}"></div>
+				</div>
+			{/if}
+		{/each}
+	</div>
+	<div id="collab-choices">
+		{#each Object.entries(availableCollabWeapons) as [collabWeapon, available]}
+			{#if available}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div class="weapon choice" on:click={() => clickHandler(collabWeapon)}>
+					<div class="img {collabWeapon}"></div>
+				</div>
+			{/if}
+		{/each}
+	</div>
 </div>
 
 <style lang="scss">
