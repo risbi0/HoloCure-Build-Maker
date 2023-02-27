@@ -142,7 +142,7 @@
 
 		const finalEncoded = Buffer.from(`c:${c}&b:${b}&n:${n}&l:${l}&w:${w}&i:${i}&t:${t}&s:${s}&a:${a}`).toString('base64');
 
-		link = `${window.location.host}${window.location.pathname}?build=${finalEncoded}`;
+		link = `https://${window.location.host}${window.location.pathname}?build=${finalEncoded}`;
 		copySuccess = false;
 	}
 
