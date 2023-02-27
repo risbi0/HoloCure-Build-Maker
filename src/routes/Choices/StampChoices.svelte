@@ -9,12 +9,9 @@
         resetStampSlots
     } from "../../stores";
 
-    export let display;
+	import { stamps } from "../../variables";
 
-    const stamps = [
-        'atk', 'bomb', 'crit', 'greed', 'haste', 'knockback', 'life-steal', 'projectile',
-        'reverse', 'rgb', 'size', 'slow', 'solo', 'stun', 'trumpet', 'weaken'
-    ];
+    export let display;
 
     // initialize stamp displays
     let availableStamps = stamps.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
@@ -49,14 +46,25 @@
         displayStampChoices.set(false);
     }
 
-    $: if ($removeStamp) {
-        showPrevious();
+	function update() {
+		$equippedStamps.forEach((stamp) => {
+			availableStamps[stamp] = false;
+		});
+	}
 
-        // remove item in equipped items
-        equippedStamps.update((arr) => {
-            arr[$clickedSlotIndex] = '';
-            return arr;
-        });
+    $: if ($removeStamp) {
+		if ($clickedSlotIndex !== null) {
+			showPrevious();
+
+			// remove stamp in equipped stamp
+			equippedStamps.update((arr) => {
+				arr[$clickedSlotIndex] = '';
+				return arr;
+			});
+		} else {
+			// update available items from shared build
+			update();
+		}
 
         // set boolean back to false
         removeStamp.set(false);

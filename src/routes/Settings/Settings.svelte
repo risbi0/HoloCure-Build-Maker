@@ -1,6 +1,6 @@
 <script>
     import {
-        charSelected, collabLimit,
+        charSelected, collabLimit, weaponSlots,
         equippedWeapons, weaponAddSymbols, resetWeaponSlots,
         equippedItems, itemAddSymbols, resetItemSlots,
         equippedStamps, stampAddSymbols, resetStampSlots,
@@ -8,27 +8,18 @@
         showBuildName, showStamps,
     } from '../../stores';
 
-    const characters = [
-        'Amelia Watson', 'Gawr Gura', 'Ninomae Inanis', 'Takanashi Kiara', 'Calliope Mori',
-        'Hakos Baelz', 'Ouro Kronii', 'Ceres Fauna', 'Nanashi Mumei', 'Tsukumo Sana', 'IRyS',
-        'Tokino Sora', 'AZKi', 'Roboco-san', 'Hoshimachi Suisei', 'Sakura Miko',
-        'Shirakami Fubuki', 'Ookami Mio', 'Nekomata Okayu', 'Inugami Korone',
-        'Akai Haato', 'Yozora Mel', 'Natsuiro Matsuri', 'Aki Rosenthal',
-        'Oozora Subaru', 'Yuzuki Choco', 'Murasaki Shion', 'Nakiri Ayame', 'Minato Aqua'
-    ];
-
-    let weaponSlots = 6;
+    import { characters } from '../../variables';
 
     function weaponSlotAmount(num) {
-        if ((weaponSlots > 1 && num === -1) || (weaponSlots < 6 && num === 1)) {
-            weaponSlots += num;
+        if (($weaponSlots > 1 && num === -1) || ($weaponSlots < 6 && num === 1)) {
+            $weaponSlots += num;
 
             // reinitialize stores
-            equippedWeapons.set(Array(weaponSlots - 1).fill(''));
-            weaponAddSymbols.set(Array(weaponSlots - 1).fill('add'));
+            equippedWeapons.set(Array($weaponSlots - 1).fill(''));
+            weaponAddSymbols.set(Array($weaponSlots - 1).fill('add'));
 
             // set new collab limit
-            const newCollabLimit = weaponSlots - 1 > 1 ? weaponSlots - 2 : 0;
+            const newCollabLimit = $weaponSlots - 1 > 1 ? $weaponSlots - 2 : 0;
             collabLimit.set(newCollabLimit);
 
             // reset weapon slots in WeaponChoices
@@ -64,7 +55,11 @@
 
 <div id="settings">
 	<div id="char-select-container">
-		<select id="char-select" on:change={(e) => charSelected.set(e.target.value)}>
+		<select
+			id="char-select"
+			bind:value={$charSelected}
+			on:change={(e) => charSelected.set(e.target.value)}
+		>
 			{#each characters as character}
 				<option value="{character}">{character}</option>
 			{/each}
@@ -76,14 +71,18 @@
 				<p for="weapon-slots">Weapon Slot #</p>
 				<div id="weapon-slots">
 					<button class="minus" on:click={() => weaponSlotAmount(-1)}></button>
-					<div>{weaponSlots}</div>
+					<div>{$weaponSlots}</div>
 					<button class="plus" on:click={() => weaponSlotAmount(1)}></button>
 				</div>
 			</div>
 			<div id="show-stamps-container">
 				<p>Show Stamps</p>
 				<label class="switch">
-					<input type="checkbox" checked on:change={(e) => showStamps.set(e.target.checked)}>
+					<input
+						type="checkbox"
+						bind:checked={$showStamps}
+						on:change={(e) => showStamps.set(e.target.checked)}
+					>
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -93,7 +92,11 @@
 			<div id="show-build-name-container">
 				<p>Show Build Name</p>
 				<label class="switch">
-					<input type="checkbox" on:change={(e) => showBuildName.set(e.target.checked)}>
+					<input
+						type="checkbox"
+						bind:checked={$showBuildName}
+						on:change={(e) => showBuildName.set(e.target.checked)}
+					>
 					<span class="slider"></span>
 				</label>
 			</div>

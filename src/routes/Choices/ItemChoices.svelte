@@ -9,30 +9,17 @@
         resetItemSlots
     } from "../../stores";
 
+	import { items } from "../../variables";
+
     export let display;
-
-    let slotIndex, equippedItms, removeItm, resetItmSlots;
-    clickedSlotIndex.subscribe(v => slotIndex = v);
-    equippedItems.subscribe(v => equippedItms = v);
-    removeItem.subscribe(v => removeItm = v);
-    resetItemSlots.subscribe(v => resetItmSlots = v);
-
-    const items = [
-        'blacksmiths-gear', 'body-pillow', 'breastplate', 'chickens-feather', 'credit-card',
-        'devil-hat', 'energy-drink', 'face-mask', 'full-meal', 'gorillas-paw',
-        'gws-pill', 'halu', 'headphones', 'hope-sode', 'idol-costume',
-        'injection-type-asacoco', 'just-bandage', 'milk', 'shackles', 'limiter',
-        'membership', 'horn', 'ppp', 'plushie', 'sake',
-        'piggy-bank', 'glasses', 'sc-time', 'uber-sheep'
-    ];
 
     // initialize item displays
     let availableItems = items.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
 
     // show previous equipped item when replacing
     function showPrevious() {
-        if (equippedItms[slotIndex]) {
-            availableItems[equippedItms[slotIndex]] = true;
+        if ($equippedItems[$clickedSlotIndex]) {
+            availableItems[$equippedItems[$clickedSlotIndex]] = true;
         }
     }
 
@@ -41,13 +28,13 @@
 
         // remove add symbol
         itemAddSymbols.update((arr) => {
-            arr[slotIndex] = '';
+            arr[$clickedSlotIndex] = '';
             return arr;
         });
 
         // add selected item to equipped items
         equippedItems.update((arr) => {
-            arr[slotIndex] = item;
+            arr[$clickedSlotIndex] = item;
             return arr;
         });
 
@@ -59,20 +46,31 @@
         displayItemChoices.set(false);
     }
 
-    $: if (removeItm) {
-        showPrevious();
+	function update() {
+		$equippedItems.forEach((item) => {
+			availableItems[item] = false;
+		});
+	}
 
-        // remove item in equipped items
-        equippedItems.update((arr) => {
-            arr[slotIndex] = '';
-            return arr;
-        });
+    $: if ($removeItem) {
+		if ($clickedSlotIndex !== null) {
+			showPrevious();
+
+			// remove item in equipped items
+			equippedItems.update((arr) => {
+				arr[$clickedSlotIndex] = '';
+				return arr;
+			});
+		} else {
+			// update available items from shared build
+			update();
+		}
 
         // set boolean back to false
         removeItem.set(false);
     }
 
-    $: if (resetItmSlots) {
+    $: if ($resetItemSlots) {
         availableItems = items.reduce((accumulator, currValue) => (accumulator[currValue] = true, accumulator), {});
         resetItemSlots.set(false);
     }

@@ -10,19 +10,10 @@
         resetWeaponSlots
     } from '../../stores';
 
+	import { basicWeapons, collabWeapons } from '../../variables';
+
     export let display;
 
-    const basicWeapons = [
-        'bl-book', 'bounce-ball', 'ceos-tears', 'cutting-board', 'lava-bucket',
-        'ens-curse', 'fan-beam', 'glowstick', 'holo-bomb', 'idol-song',
-        'plug-in-asacoco', 'sui-axe', 'chama-cooking', 'wamy-water', 'x-potato'
-    ];
-    const collabWeapons = [
-        'absolute-wall', 'bl-fujoshi', 'bone-bros', 'breathe-in-asacoco', 'broken-dreams',
-        'dragon-fire', 'eldritch-horror', 'elite-cooking', 'flattening-board', 'frozen-sea',
-        'im-die-ty-4eva', 'idol-concert', 'light-beam', 'micomet', 'mikorone',
-        'rap-dog', 'ring-of-fitness', 'snow-sake', 'stream-of-tears'
-    ];
     const collabForumlas = {
         'absolute-wall': ['bounce-ball', 'cutting-board'],
         'bl-fujoshi': ['bl-book', 'sui-axe'],
@@ -138,10 +129,12 @@
 
     $: if ($removeWeapon) {
         // remove weapon in equipped weapons
-        equippedWeapons.update((arr) => {
-            arr[$clickedSlotIndex] = '';
-            return arr;
-        });
+		if ($clickedSlotIndex !== null) {
+			equippedWeapons.update((arr) => {
+				arr[$clickedSlotIndex] = '';
+				return arr;
+			});
+		}
 
         manageWeaponChoices();
 

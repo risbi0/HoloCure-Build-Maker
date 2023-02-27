@@ -6,9 +6,10 @@
         showPriorityOrder
     } from "../../stores";
 
+	import { stats } from "../../variables";
+
     export let display;
 
-    const stats = ['hp-up', 'atk-up', 'spd-up', 'crt-up', 'pick-up', 'haste-up'];
     let statPriorityDisplay = Array(stats.length).fill(''), currentOrder = 1, statPriorityList = [];
 
     function manageOrder(index) {

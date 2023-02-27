@@ -1,8 +1,8 @@
 <script>
-    import { showBuildName } from "../../stores";
+    import { showBuildName, buildName } from "../../stores";
 
     const buildNameCharLimit = 24;
-    let text = 'Build Name', html;
+    let html;
 
     function keypressHandler(e) {
         // disable input on reaching char limit and enter key
@@ -18,26 +18,26 @@
         // this forces to cut the input when reaching the char limit
         // since the length isn't updated when using an IME (keypress handler won't work)
         if (e.keyCode === 13 && e.target.innerText.length >= buildNameCharLimit) {
-            text = html.substring(0, 24);
+            $buildName = html.substring(0, 24);
         }
     }
 
     function focusHandler(e) {
         // remove placeholder
         if (e.target.innerText === 'Build Name') {
-            text = '';
+            $buildName = '';
         }
     }
 
     function blurHandler(e) {
         // insert placeholder when leaving empty text
         if (!e.target.innerText || e.target.innerText === '\n') {
-            text = 'Build Name';
+            $buildName = 'Build Name';
         }
         // other than the enter key that enters the input from an IME,
         // the user can also unfocus the editable, this captures it
         if (e.target.innerText.length >= buildNameCharLimit) {
-            text = html.substring(0, 24);
+            $buildName = html.substring(0, 24);
         }
     }
 </script>
@@ -47,7 +47,7 @@
         id="build-name"
         onpaste="return false;"
         contenteditable="true"
-        bind:textContent={text}
+        bind:textContent={$buildName}
         bind:innerHTML={html}
         on:keypress={keypressHandler}
         on:keyup={keyupHandler}

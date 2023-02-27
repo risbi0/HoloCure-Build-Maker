@@ -27,7 +27,9 @@ export const resetWeaponSlots = writable(false);
 export const resetItemSlots = writable(false);
 export const resetStampSlots = writable(false);
 // misc
+export const buildName = writable('Build Name');
 export const collabLimit = writable(4);
-export const clickedSlotIndex = writable();
+export const weaponSlots = writable(6);
+export const clickedSlotIndex = writable(null);
 export const statPriorityOrder = writable([]);
 export const showPriorityOrder = writable(false);
