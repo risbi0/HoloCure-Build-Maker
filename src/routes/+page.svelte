@@ -9,8 +9,8 @@
     function saveImage() {
         html2canvas(document.querySelector('#build-container'), { backgroundColor: '#27272A' })
         .then((canvas) => {
-            const buildName = document.querySelector('#build-name');
-            const fileName = buildName !== null ? buildName.textContent : 'Build Name';
+            const bldName = document.querySelector('#build-name');
+            const fileName = bldName !== null ? bldName.textContent : 'Build Name';
             canvas.toBlob(blob => FileSaver.saveAs(blob, `${fileName}.png`));
         });
     }
