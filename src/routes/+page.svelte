@@ -16,7 +16,7 @@
     }
 </script>
 
-<main id="main-container" style="padding-top: 10px;">
+<main id="main-container">
     <h1 id="title">HOLOCURE BUILD MAKER</h1>
     <p id="subtitle">Updated for v0.5</p>
     <Frame/>
