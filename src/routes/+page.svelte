@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
     import Frame from './Frame/Frame.svelte';
-    import Settings from './Settings/Settings.svelte';
+    import Settings from './Settings.svelte';
     import Choices from './Choices/Choices.svelte';
 
 	import {
