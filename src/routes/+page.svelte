@@ -2,19 +2,8 @@
     import Frame from './Frame/Frame.svelte';
     import Settings from './Settings.svelte';
 	import Link from './Link.svelte';
+	import SaveImage from './SaveImage.svelte';
     import Choices from './Choices/Choices.svelte';
-
-    import html2canvas from 'html2canvas';
-    import FileSaver from 'file-saver';
-
-    function saveImage() {
-        html2canvas(document.querySelector('#build-container'), { backgroundColor: '#27272A' })
-        .then((canvas) => {
-            const bldName = document.querySelector('#build-name');
-            const fileName = bldName !== null ? bldName.textContent : 'Build Name';
-            canvas.toBlob(blob => FileSaver.saveAs(blob, `${fileName}.png`));
-        });
-    }
 </script>
 
 <main id="main-container">
@@ -23,11 +12,9 @@
     <Frame/>
 </main>
 <Settings/>
-<Choices/>
-<div id="save-image-container">
-    <button id="save-image" on:click={saveImage}>Save Image</button>
-</div>
+<SaveImage/>
 <Link/>
+<Choices/>
 
 <style lang="scss">
     :global(:root) {
