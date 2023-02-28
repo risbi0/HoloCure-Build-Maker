@@ -28,6 +28,7 @@
 
 		if (!params.build) return;
 
+		// get actual build string from the Redis database
 		let buildStr;
 		fetch(`https://hcbm-api.onrender.com/get?id=${params.build}`)
 			.then((response) => {
@@ -168,9 +169,13 @@
 
 		const finalEncoded = Buffer.from(`c:${c}&b:${b}&n:${n}&l:${l}&w:${w}&i:${i}&t:${t}&s:${s}&a:${a}`).toString('base64');
 
+		// generate random 8-length alphanumeric string as the key for the Redis database
+		// and to shorten the generated link
 		const id = generateId();
 
+		// prevent storing link of the same build consecutively
 		if (finalEncoded !== oldEncoded) {
+			// store link in database
 			fetch(`https://hcbm-api.onrender.com/set?${id}=${finalEncoded}`)
 				.then((response) => {
 					if (!response) throw 'Error in saving ID';
