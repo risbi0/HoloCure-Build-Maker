@@ -35,8 +35,8 @@
 
 
     function clearWeapons() {
-        weaponAddSymbols.set(Array(5).fill('add'));
-        equippedWeapons.set(Array(5).fill(''));
+        weaponAddSymbols.set(Array($weaponSlots - 1).fill('add'));
+        equippedWeapons.set(Array($weaponSlots - 1).fill(''));
         resetWeaponSlots.set(true);
     }
 
