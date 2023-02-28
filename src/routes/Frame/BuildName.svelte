@@ -18,7 +18,7 @@
         // this forces to cut the input when reaching the char limit
         // since the length isn't updated when using an IME (keypress handler won't work)
         if (e.keyCode === 13 && e.target.innerText.length >= buildNameCharLimit) {
-            $buildName = html.substring(0, 24);
+            $buildName = html.substring(0, buildNameCharLimit);
         }
     }
 
@@ -37,7 +37,7 @@
         // other than the enter key that enters the input from an IME,
         // the user can also unfocus the editable, this captures it
         if (e.target.innerText.length >= buildNameCharLimit) {
-            $buildName = html.substring(0, 24);
+            $buildName = html.substring(0, buildNameCharLimit);
         }
     }
 </script>
