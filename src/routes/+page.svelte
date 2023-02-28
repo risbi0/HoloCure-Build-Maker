@@ -26,90 +26,104 @@
 			get: (searchParams, prop) => searchParams.get(prop)
 		});
 
-		if (params.build) {
-			const param = Buffer.from(params.build, 'base64').toString('utf8');
+		if (!params.build) return;
 
-			/*
-			c = character
-			b = show build name
-			n = build name
-			l = weapon slot #
-			w = weapons
-			i = items
-			t = show stamps
-			s = stamps
-			a = stats
-			*/
+		let buildStr;
+		fetch(`https://hcbm-api.onrender.com/get?id=${params.build}`)
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				if (!data) throw 'Data unavailable';
 
-			// separate build attributes
-			const matches = param.match(/(?<=&|^).+?(?=&|$)/g);
-			const keys = ['c', 'b', 'n', 'l', 'w', 'i', 't', 's', 'a'];
-			const b64Encoded = ['n', 'w', 'i', 's', 'a']; // the rest are boolean
-			const build = {};
+				buildStr = data['id'];
 
-			// store param in object
-			for (let i = 0; i < matches.length; i++) {
-				const keyValue = matches[i].split(':');
+				const param = Buffer.from(buildStr, 'base64').toString('utf8');
 
-				// stop loop once abnormal attributes are detected
-				if (keyValue.length !== 2 && !keys.includes(keyValue[0])) break;
+				/*
+				c = character
+				b = show build name
+				n = build name
+				l = weapon slot #
+				w = weapons
+				i = items
+				t = show stamps
+				s = stamps
+				a = stats
+				*/
 
-				const key = keyValue[0];
-				// decode name and weapon, parse the rest
-				const value = !b64Encoded.includes(key) ? parseInt(keyValue[1]) : Buffer.from(keyValue[1], 'base64').toString('utf8');
-				build[key] = value;
-			}
+				// separate build attributes
+				const matches = param.match(/(?<=&|^).+?(?=&|$)/g);
+				const keys = ['c', 'b', 'n', 'l', 'w', 'i', 't', 's', 'a'];
+				const b64Encoded = ['n', 'w', 'i', 's', 'a']; // the rest are boolean
+				const build = {};
 
-			// character
-			if ('c' in build) charSelected.set(characters[build['c']]);
-			// show build name
-			if ('b' in build) showBuildName.set(Boolean(build['b']));
-			// build name
-			if ('n' in build) buildName.set(build['n']);
-			// weapon slot #
-			if ('l' in build && build['l'] >= 1 && build['l'] <= 6) {
-				weaponSlots.set(build['l']);
-				equippedWeapons.set(Array(build['l'] - 1).fill(''));
-				weaponAddSymbols.set(Array(build['l'] - 1).fill('add'));
-			}
-			// weapons
-			if ('w' in build && build['w'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= weapons.length - 1) || i === '')) {
-				const indices = build['w'].split(',');
-				// filter first to remove empty elements
-				const collabAmount = indices.filter(i => i).map(i => i >= collabWeapons.length - 1 && i <= weapons.length - 1).length;
-				// remove elemnts based on weapon slot amount
-				indices.splice($weaponSlots - 1);
-				// remove collab in rightmost slot if breaking collab limit
-				if (collabAmount >= $weaponSlots) indices[indices.length - 1] = '';
+				// store param in object
+				for (let i = 0; i < matches.length; i++) {
+					const keyValue = matches[i].split(':');
 
-				equippedWeapons.set(indices.map(i => weapons[parseInt(i)]));
-				weaponAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
-				collabLimit.set($weaponSlots - 2);
-				removeWeapon.set(true);
-			}
-			// items
-			if ('i' in build && build['i'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= items.length - 1) || i === '')) {
-				const indices = build['i'].split(',');
-				equippedItems.set(indices.map(i => items[parseInt(i)]));
-				itemAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
-				removeItem.set(true);
-			}
-			// show stamps
-			if ('t' in build) showStamps.set(Boolean(build['t']));
-			// stamps
-			if ('s' in build && build['s'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= items.length - 1) || i === '')) {
-				const indices = build['s'].split(',');
-				equippedStamps.set(indices.map(i => stamps[parseInt(i)]));
-				stampAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
-				removeStamp.set(true);
-			}
-			// stat priority
-			if ('a' in build && build['a'].split(',').every(i => parseInt(i) >= 0 && parseInt(i) <= stats.length - 1)) {
-				statPriorityOrder.set(build['a'].split(',').map(i => stats[parseInt(i)]));
-				showPriorityOrder.set(true);
-			}
-		}
-	});
+					// stop loop once abnormal attributes are detected
+					if (keyValue.length !== 2 && !keys.includes(keyValue[0])) break;
+
+					const key = keyValue[0];
+					// decode name and weapon, parse the rest
+					const value = !b64Encoded.includes(key) ? parseInt(keyValue[1]) : Buffer.from(keyValue[1], 'base64').toString('utf8');
+					build[key] = value;
+				}
+
+				// character
+				if ('c' in build) charSelected.set(characters[build['c']]);
+				// show build name
+				if ('b' in build) showBuildName.set(Boolean(build['b']));
+				// build name
+				if ('n' in build) buildName.set(build['n']);
+				// weapon slot #
+				if ('l' in build && build['l'] >= 1 && build['l'] <= 6) {
+					weaponSlots.set(build['l']);
+					equippedWeapons.set(Array(build['l'] - 1).fill(''));
+					weaponAddSymbols.set(Array(build['l'] - 1).fill('add'));
+				}
+				// weapons
+				if ('w' in build && build['w'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= weapons.length - 1) || i === '')) {
+					const indices = build['w'].split(',');
+					// filter first to remove empty elements
+					const collabAmount = indices.filter(i => i).map(i => i >= collabWeapons.length - 1 && i <= weapons.length - 1).length;
+					// remove elemnts based on weapon slot amount
+					indices.splice($weaponSlots - 1);
+					// remove collab in rightmost slot if breaking collab limit
+					if (collabAmount >= $weaponSlots) indices[indices.length - 1] = '';
+
+					equippedWeapons.set(indices.map(i => weapons[parseInt(i)]));
+					weaponAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
+					collabLimit.set($weaponSlots - 2);
+					removeWeapon.set(true);
+				}
+				// items
+				if ('i' in build && build['i'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= items.length - 1) || i === '')) {
+					const indices = build['i'].split(',');
+					equippedItems.set(indices.map(i => items[parseInt(i)]));
+					itemAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
+					removeItem.set(true);
+				}
+				// show stamps
+				if ('t' in build) showStamps.set(Boolean(build['t']));
+				// stamps
+				if ('s' in build && build['s'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= items.length - 1) || i === '')) {
+					const indices = build['s'].split(',');
+					equippedStamps.set(indices.map(i => stamps[parseInt(i)]));
+					stampAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
+					removeStamp.set(true);
+				}
+				// stat priority
+				if ('a' in build && build['a'].split(',').every(i => parseInt(i) >= 0 && parseInt(i) <= stats.length - 1)) {
+					statPriorityOrder.set(build['a'].split(',').map(i => stats[parseInt(i)]));
+					showPriorityOrder.set(true);
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	})
 
     function saveImage() {
         html2canvas(document.querySelector('#build-container'), { backgroundColor: '#27272A' })
@@ -119,6 +133,18 @@
             canvas.toBlob(blob => FileSaver.saveAs(blob, `${fileName}.png`));
         });
     }
+
+	function generateId() {
+		let id = '';
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		const charactersLength = characters.length;
+
+		for (let i = 0; i < 8; i++) {
+			id += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+
+		return id;
+	}
 
 	let link, copySuccess = false;
 	function generateLink() {
@@ -142,8 +168,17 @@
 
 		const finalEncoded = Buffer.from(`c:${c}&b:${b}&n:${n}&l:${l}&w:${w}&i:${i}&t:${t}&s:${s}&a:${a}`).toString('base64');
 
-		link = `https://${window.location.host}${window.location.pathname}?build=${finalEncoded}`;
-		copySuccess = false;
+		const id = generateId();
+
+		fetch(`https://hcbm-api.onrender.com/set?${id}=${finalEncoded}`)
+			.then((response) => {
+				if (!response) throw 'Error in saving ID'
+				link = `https://${window.location.host}${window.location.pathname}?build=${id}`;
+				copySuccess = false;
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 	function copyToClipboard() {
@@ -299,19 +334,19 @@
     }
 	#generated-link {
 		display: flex;
-		flex-direction: column;
-		align-items: end;
+		flex-direction: row;
+		justify-content: space-between;
 		background-color: var(--dark-bg-color);
 		margin: 20px auto;
 		padding: 5px 10px 10px 10px;
-		width: 350px;
-		line-break: anywhere;
+		width: max-content;
 		line-height: 30px;
 
 		div {
 			display: flex;
 			align-items: center;
 			height: 35px;
+			margin-left: 10px;
 
 			p {
 				padding-bottom: 5px;
