@@ -146,7 +146,7 @@
 		return id;
 	}
 
-	let link, copySuccess = false;
+	let link, copySuccess = false, oldEncoded;
 	function generateLink() {
 		const c = characters.indexOf($charSelected);
 		const b = +$showBuildName;
@@ -170,15 +170,18 @@
 
 		const id = generateId();
 
-		fetch(`https://hcbm-api.onrender.com/set?${id}=${finalEncoded}`)
-			.then((response) => {
-				if (!response) throw 'Error in saving ID'
-				link = `https://${window.location.host}${window.location.pathname}?build=${id}`;
-				copySuccess = false;
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		if (finalEncoded !== oldEncoded) {
+			fetch(`https://hcbm-api.onrender.com/set?${id}=${finalEncoded}`)
+				.then((response) => {
+					if (!response) throw 'Error in saving ID';
+					link = `https://${window.location.host}${window.location.pathname}?build=${id}`;
+					copySuccess = false;
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+			oldEncoded = finalEncoded;
+		}
 	}
 
 	function copyToClipboard() {
