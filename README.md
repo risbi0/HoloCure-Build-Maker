@@ -2,6 +2,11 @@
 
 Made in [SvelteKit](https://kit.svelte.dev/).
 
+Technologies used:
+- [Svelte](https://svelte.dev/) - front-end framework
+- [Vite](https://vitejs.dev/) - build tool
+- [Redis](https://redis.io/) - database for storing build strings
+
 ## Development
 
 Install dependencies:
