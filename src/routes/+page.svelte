@@ -56,7 +56,7 @@
 				// separate build attributes
 				const matches = param.match(/(?<=&|^).+?(?=&|$)/g);
 				const keys = ['c', 'b', 'n', 'l', 'w', 'i', 't', 's', 'a'];
-				const b64Encoded = ['n', 'w', 'i', 's', 'a']; // the rest are boolean
+				const nonInteger = ['n', 'w', 'i', 's', 'a']; // the rest are boolean
 				const build = {};
 
 				// store param in object
@@ -67,8 +67,8 @@
 					if (keyValue.length !== 2 && !keys.includes(keyValue[0])) break;
 
 					const key = keyValue[0];
-					// decode name and weapon, parse the rest
-					const value = !b64Encoded.includes(key) ? parseInt(keyValue[1]) : Buffer.from(keyValue[1], 'base64').toString('utf8');
+					// parse integer values
+					const value = nonInteger.includes(key) ?  keyValue[1] : parseInt(keyValue[1]);
 					build[key] = value;
 				}
 
@@ -148,25 +148,25 @@
 	}
 
 	let link, copySuccess = false, oldEncoded;
+	// save attributes of the build in one long string which will be parsed on load
 	function generateLink() {
+		/*
+		name = array index
+		any boolean = binary
+		build name, weapon slots = as is
+		all gears, stat priority = array index (convert to empty string if empty slot) -> comma-delimited string
+		*/
 		const c = characters.indexOf($charSelected);
 		const b = +$showBuildName;
-		const n = Buffer.from($buildName).toString('base64');
-
+		const n = $buildName;
 		const l = $weaponSlots
-		const equippedWeaps = $equippedWeapons.map(weapon => weapons.indexOf(weapon)).map(i => i !== -1 ? i : '');
-		const w = Buffer.from(equippedWeaps.join(',')).toString('base64');
-
-		const equippedItms = $equippedItems.map(item => items.indexOf(item)).map(i => i !== -1 ? i : '');
-		const i = Buffer.from(equippedItms.join(',')).toString('base64');
-
+		const w = $equippedWeapons.map(weapon => weapons.indexOf(weapon)).map(i => i !== -1 ? i : '').join(',');
+		const i = $equippedItems.map(item => items.indexOf(item)).map(i => i !== -1 ? i : '').join(',');
 		const t = +$showStamps;
-		const equippedStmps = $equippedStamps.map(stamp => stamps.indexOf(stamp)).map(i => i !== -1 ? i : '');
-		const s = Buffer.from(equippedStmps.join(',')).toString('base64');
+		const s = $equippedStamps.map(stamp => stamps.indexOf(stamp)).map(i => i !== -1 ? i : '').join(',');
+		const a = $statPriorityOrder.map(stat => stats.indexOf(stat)).join(',');
 
-		const statPrioOrder = $statPriorityOrder.map(stat => stats.indexOf(stat));
-		const a = Buffer.from(statPrioOrder.join(',')).toString('base64');
-
+		// place all with its respective key and encode to base64
 		const finalEncoded = Buffer.from(`c:${c}&b:${b}&n:${n}&l:${l}&w:${w}&i:${i}&t:${t}&s:${s}&a:${a}`).toString('base64');
 
 		// generate random 8-length alphanumeric string as the key for the Redis database
