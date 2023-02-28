@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { Buffer } from 'buffer';
 
 	import {
 		charSelected, showBuildName, buildName,
@@ -10,8 +11,6 @@
 	} from '../stores';
 
 	import { characters, collabWeapons, weapons, items, stamps, stats } from '../variables';
-
-	import { Buffer } from 'buffer';
 
 	// generate build from parameter
 	onMount(() => {
