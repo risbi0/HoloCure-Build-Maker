@@ -94,7 +94,7 @@
 					// remove collab in rightmost slot if breaking collab limit
 					if (collabAmount >= $weaponSlots) indices[indices.length - 1] = '';
 
-					equippedWeapons.set(indices.map(i => weapons[parseInt(i)]));
+					equippedWeapons.set(indices.map(i => weapons[parseInt(i)]).map(i => i ? i : ''));
 					weaponAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
 					collabLimit.set($weaponSlots - 2);
 					removeWeapon.set(true);
@@ -102,7 +102,7 @@
 				// items
 				if ('i' in build && build['i'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= items.length - 1) || i === '')) {
 					const indices = build['i'].split(',');
-					equippedItems.set(indices.map(i => items[parseInt(i)]));
+					equippedItems.set(indices.map(i => items[parseInt(i)]).map(i => i ? i : ''));
 					itemAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
 					removeItem.set(true);
 				}
@@ -111,7 +111,7 @@
 				// stamps
 				if ('s' in build && build['s'].split(',').every(i => (parseInt(i) >= 0 && parseInt(i) <= items.length - 1) || i === '')) {
 					const indices = build['s'].split(',');
-					equippedStamps.set(indices.map(i => stamps[parseInt(i)]));
+					equippedStamps.set(indices.map(i => stamps[parseInt(i)]).map(i => i ? i : ''));
 					stampAddSymbols.set(indices.map(i => i === '' ? 'add' : ''));
 					removeStamp.set(true);
 				}
