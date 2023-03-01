@@ -1,9 +1,9 @@
 <script>
-    import Frame from './Frame/Frame.svelte';
-    import Settings from './Settings.svelte';
-	import Link from './Link.svelte';
-	import SaveImage from './SaveImage.svelte';
-    import Choices from './Choices/Choices.svelte';
+    import Frame from '../components/Frame/Frame.svelte';
+    import Settings from '../components/Settings.svelte';
+	import Link from '../components/Link.svelte';
+	import SaveImage from '../components/SaveImage.svelte';
+    import Choices from '../components/Choices/Choices.svelte';
 </script>
 
 <main id="main-container">
