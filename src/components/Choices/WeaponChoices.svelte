@@ -99,9 +99,13 @@
         }
 
         // assign availability
-        [...Object.keys(availableBasicWeapons), ...Object.keys(availableCollabWeapons)].forEach((weapon) => {
+        [...Object.keys(availableBasicWeapons)].forEach((weapon) => {
             if (unavailableWeapons.has(weapon)) {
                 availableBasicWeapons[weapon] = false;
+            }
+        });
+        [...Object.keys(availableCollabWeapons)].forEach((weapon) => {
+            if (unavailableWeapons.has(weapon)) {
 				availableCollabWeapons[weapon] = false;
             }
         });
