@@ -3,8 +3,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
-		"deploy": "node deploy.js"
+		"preview": "vite preview"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^2.0.1",
