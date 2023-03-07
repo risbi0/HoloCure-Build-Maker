@@ -9,7 +9,6 @@
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^2.0.1",
 		"@sveltejs/kit": "^1.5.0",
-		"gh-pages": "^5.0.0",
 		"sass": "^1.58.3",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
