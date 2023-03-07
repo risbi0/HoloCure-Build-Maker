@@ -17,8 +17,8 @@
 
 	$: if (browser && analyticsId) {
 		webVitals({
-			path: page.url.pathname,
-			params: page.params,
+			path: $page.url.pathname,
+			params: $page.params,
 			analyticsId
 		});
 	}
