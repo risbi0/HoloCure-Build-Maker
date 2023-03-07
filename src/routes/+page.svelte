@@ -15,6 +15,9 @@
 <SaveImage/>
 <Link/>
 <Choices/>
+<div id="source-code-container">
+	<a id="source-code" href="https://github.com/risbi0/HoloCure-Build-Maker" target="_blank" rel="noreferrer">Source Code</a>
+</div>
 
 <style lang="scss">
     :global(:root) {
@@ -47,6 +50,8 @@
 
     :global(body) {
         background-color: var(--bg-color);
+		height: 100vh;
+		position: relative;
     }
 
     :global(*, body) {
@@ -136,4 +141,19 @@
         width: 175px;
         height: 40px;
     }
+
+	#source-code-container {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+	}
+	#source-code {
+		text-decoration: none;
+		font-size: 12px;
+		padding-bottom: 5px;
+
+		&:hover {
+			border-bottom: 2px dashed var(--font-color);
+		}
+	}
 </style>
