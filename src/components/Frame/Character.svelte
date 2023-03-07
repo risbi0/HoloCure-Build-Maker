@@ -4,7 +4,7 @@
 
 <div id="character-container">
     <div id="character">
-        <div id="img" style="background-image: url('/HoloCure-Build-Maker/img/character/{charName}/portrait.png');"></div>
+        <div id="img" style="background-image: url('/img/character/{charName}/portrait.png');"></div>
     </div>
 </div>
 

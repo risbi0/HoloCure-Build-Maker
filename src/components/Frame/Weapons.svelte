@@ -35,7 +35,7 @@
 
 <div id="weapons-container">
     <div id="default-weap">
-        <div class="img" style="background-image: url('/HoloCure-Build-Maker/img/character/{charName}/weapon.png')"></div>
+        <div class="img" style="background-image: url('/img/character/{charName}/weapon.png')"></div>
     </div>
     {#each $equippedWeapons as equippedWeapon, index}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
