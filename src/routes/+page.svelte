@@ -5,10 +5,23 @@
 	import SaveImage from '$lib/SaveImage.svelte';
     import Choices from '$lib/Choices/Choices.svelte';
 
-	import { dev } from '$app/environment';
+	// Vercel Analytics
 	import { inject } from '@vercel/analytics';
+	import { dev, browser } from '$app/environment';
+	import { page } from '$app/stores';
+	import { webVitals } from '$lib/vitals';
 
 	inject({ mode: dev ? 'development' : 'production' });
+
+	let analyticsId = import.meta.env.VERCEL_ANALYTICS_ID;
+
+	$: if (browser && analyticsId) {
+		webVitals({
+			path: page.url.pathname,
+			params: page.params,
+			analyticsId
+		});
+	}
 </script>
 
 <main id="main-container">
