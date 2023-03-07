@@ -50,7 +50,7 @@
 
     :global(body) {
         background-color: var(--bg-color);
-		height: 100vh;
+		min-height: 100vh;
 		position: relative;
     }
 
@@ -134,7 +134,7 @@
         display: flex;
         justify-content: center;
         width: 100%;
-		margin: 20px auto;
+		padding-bottom: 20px;
     }
     :global(#save-image, #generate-link) {
         font-size: 16px;
