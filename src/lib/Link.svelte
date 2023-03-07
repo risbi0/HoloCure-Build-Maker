@@ -8,9 +8,9 @@
 		equippedItems, itemAddSymbols, removeItem,
 		equippedStamps, stampAddSymbols, removeStamp, showStamps,
 		statPriorityOrder, showPriorityOrder
-	} from '../stores';
+	} from '$lib/stores';
 
-	import { characters, collabWeapons, weapons, items, stamps, stats } from '../variables';
+	import { characters, collabWeapons, weapons, items, stamps, stats } from '$lib/variables';
 
 	// generate build from parameter
 	onMount(() => {

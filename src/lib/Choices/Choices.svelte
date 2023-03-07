@@ -9,7 +9,7 @@
         displayItemChoices,
         displayStampChoices,
         displayStatChoices
-    } from '../../stores';
+    } from '$lib/stores';
 
     function hide() {
         displayChoices.set(false);

@@ -7,9 +7,9 @@
         clickedSlotIndex,
         removeItem,
         resetItemSlots
-    } from "../../stores";
+    } from '$lib/stores';
 
-	import { items } from "../../variables";
+	import { items } from '$lib/variables';
 
     export let display;
 

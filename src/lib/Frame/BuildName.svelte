@@ -1,5 +1,5 @@
 <script>
-    import { showBuildName, buildName } from "../../stores";
+    import { showBuildName, buildName } from '$lib/stores';
 
     const buildNameCharLimit = 24;
     let html;

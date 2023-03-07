@@ -2,7 +2,7 @@
     import Character from './Character.svelte';
     import Build from './Build.svelte';
 
-    import { charSelected } from '../../stores';
+    import { charSelected } from '$lib/stores';
 </script>
 
 <div id="build-container">

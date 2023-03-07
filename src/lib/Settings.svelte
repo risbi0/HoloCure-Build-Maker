@@ -6,9 +6,9 @@
         equippedStamps, stampAddSymbols, resetStampSlots,
         displayChoices, displayStatChoices,
         showBuildName, showStamps,
-    } from '../stores';
+    } from '$lib/stores';
 
-    import { characters } from '../variables';
+    import { characters } from '$lib/variables';
 
     function weaponSlotAmount(num) {
         if (($weaponSlots > 1 && num === -1) || ($weaponSlots < 6 && num === 1)) {

@@ -7,9 +7,9 @@
         clickedSlotIndex,
         removeStamp,
         resetStampSlots
-    } from "../../stores";
+    } from '$lib/stores';
 
-	import { stamps } from "../../variables";
+	import { stamps } from '$lib/variables';
 
     export let display;
 

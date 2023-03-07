@@ -6,7 +6,7 @@
         weaponAddSymbols,
         clickedSlotIndex,
         removeWeapon
-    } from '../../stores';
+    } from '$lib/stores';
 
     export let charName;
 

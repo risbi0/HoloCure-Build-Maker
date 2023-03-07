@@ -6,7 +6,7 @@
         itemAddSymbols,
         clickedSlotIndex,
         removeItem
-    } from "../../stores";
+    } from '$lib/stores';
 
     const displayRemoveBtn = Array(6).fill('hidden');
 

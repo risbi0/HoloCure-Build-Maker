@@ -8,9 +8,9 @@
         equippedWeapons,
         removeWeapon,
         resetWeaponSlots
-    } from '../../stores';
+    } from '$lib/stores';
 
-	import { basicWeapons, collabWeapons } from '../../variables';
+	import { basicWeapons, collabWeapons } from '$lib/variables';
 
     export let display;
 

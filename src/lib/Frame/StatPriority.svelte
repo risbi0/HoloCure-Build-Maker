@@ -1,5 +1,5 @@
 <script>
-    import { statPriorityOrder, showPriorityOrder } from "../../stores";
+    import { statPriorityOrder, showPriorityOrder } from '$lib/stores';
 </script>
 
 {#if $showPriorityOrder}

@@ -4,9 +4,9 @@
         displayStatChoices,
         statPriorityOrder,
         showPriorityOrder
-    } from "../../stores";
+    } from '$lib/stores';
 
-	import { stats } from "../../variables";
+	import { stats } from '$lib/variables';
 
     export let display;
 

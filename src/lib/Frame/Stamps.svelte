@@ -7,7 +7,7 @@
         clickedSlotIndex,
         removeStamp,
         showStamps
-    } from "../../stores";
+    } from '$lib/stores';
 
     const displayRemoveBtn = Array(3).fill('hidden');
 
