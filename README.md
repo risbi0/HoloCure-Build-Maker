@@ -1,11 +1,9 @@
 # HoloCure Build Maker
 
-Made in [SvelteKit](https://kit.svelte.dev/) and deployed in [Vercel](https://vercel.com/).
-
-Technologies used:
-- [Svelte](https://svelte.dev/) - front-end framework
-- [Vite](https://vitejs.dev/) - build tool
-- [Redis](https://redis.io/) - database for storing build strings
+Tech Stack:
+- Framework - [SvelteKit](https://kit.svelte.dev/)
+- Database - [Redis](https://redis.io/)
+- Deployment - [Vercel](https://vercel.com/)
 
 ## Development
 
